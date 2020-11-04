@@ -92,6 +92,7 @@ sf::Vector2f Tank::RunPrediction(float gameTime) {
 
 	sf::Vector2f velocity;
 	sf::Vector2f distanceBetweenLastMessages;
+	float timesinceLastMessages = gameTime - msg0.time;
 	float timeBetweenLastMessages;
 
 
@@ -105,13 +106,41 @@ sf::Vector2f Tank::RunPrediction(float gameTime) {
 
 	//Displacement = speed * time
 	sf::Vector2f Dispalcement;
-	Dispalcement.x = velocity.x * (gameTime - msg0.time);
+	/*Dispalcement.x = velocity.x * (gameTime - msg0.time);
 	Dispalcement.y = velocity.y * (gameTime - msg0.time);
 
 	predictedX = lastPosition.x + Dispalcement.x;
 	predictedY = lastPosition.y + Dispalcement.y;
 
-	return sf::Vector2f( predictedX, predictedY );
+	return sf::Vector2f( predictedX, predictedY );*/
+
+
+	//Quadratic
+
+	sf::Vector2f previousVelocity;
+	sf::Vector2f distanceBetweenOlderMessages;
+	float timeBetweenOlderMessages;
+
+	distanceBetweenOlderMessages.x = msg1.x - msg2.x;
+	distanceBetweenOlderMessages.y = msg1.y - msg2.y;
+
+	timeBetweenOlderMessages = msg1.time - msg2.time;
+
+	previousVelocity = distanceBetweenOlderMessages / timeBetweenOlderMessages;
+
+	//acceleration = change in speed/change in time (between last 2 messages)
+	sf::Vector2f acceleration;
+	acceleration = (velocity - previousVelocity) / timeBetweenLastMessages;
+
+	//displacement = velocity * timesinceLastMessages+0.5f * acceleration *(timesinceLastMessages^2)
+	// s=ut+1/2at^2
+
+	Dispalcement = (velocity * timesinceLastMessages) + (0.5f * acceleration * (timesinceLastMessages * timesinceLastMessages));
+
+	predictedX = lastPosition.x + Dispalcement.x;
+	predictedY = lastPosition.y + Dispalcement.y;
+
+	return sf::Vector2f(predictedX, predictedY);
 }
 
 void Tank::Reset() {
