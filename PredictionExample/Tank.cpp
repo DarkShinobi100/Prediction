@@ -66,13 +66,13 @@ sf::Vector2f Tank::RunPrediction(float gameTime) {
 	float predictedY = -1.0f;
 
 	const int msize = m_Messages.size();
-	if( msize < 3 ) {
-		return sf::Vector2f( predictedX, predictedX );
+	if (msize < 3) {
+		return sf::Vector2f(predictedX, predictedX);
 	}
 	const TankMessage& msg0 = m_Messages[msize - 1];
 	const TankMessage& msg1 = m_Messages[msize - 2];
 	const TankMessage& msg2 = m_Messages[msize - 3];
-	
+
 	// FIXME: Implement prediction here!
 	// You have:
 	// - the history of position messages received, in "m_Messages"
@@ -81,10 +81,36 @@ sf::Vector2f Tank::RunPrediction(float gameTime) {
 	//
 	// You need to update:
 	// - the predicted position at the current time, in "predictedX" and "predictedY"
-		
+
 	//No model prediction
 	predictedX = msg0.x;
 	predictedY = msg0.y;
+
+
+	//Linear prediction
+	//speed = distance/ Time
+
+	sf::Vector2f velocity;
+	sf::Vector2f distanceBetweenLastMessages;
+	float timeBetweenLastMessages;
+
+
+	distanceBetweenLastMessages.x = msg0.x - msg1.x;
+	distanceBetweenLastMessages.y = msg0.y - msg1.y;
+	timeBetweenLastMessages = msg0.time - msg1.time;
+
+	velocity = distanceBetweenLastMessages / timeBetweenLastMessages;
+
+	sf::Vector2f lastPosition = sf::Vector2f(msg0.x, msg0.y);
+
+	//Displacement = speed * time
+	sf::Vector2f Dispalcement;
+	Dispalcement.x = velocity.x * (gameTime - msg0.time);
+	Dispalcement.y = velocity.y * (gameTime - msg0.time);
+
+	predictedX = lastPosition.x + Dispalcement.x;
+	predictedY = lastPosition.y + Dispalcement.y;
+
 	return sf::Vector2f( predictedX, predictedY );
 }
 
