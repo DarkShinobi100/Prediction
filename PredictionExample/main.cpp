@@ -24,7 +24,7 @@ int main() {
 	tanks[0].setPosition(64, 256);
 
 	tanks[1].setPosition(416, 128);
-	tanks[1].SetRenderMode(Tank::RenderMode::REAL_AND_PREDICTED);
+	tanks[1].SetRenderMode(Tank::RenderMode::PREDICTED_ONLY);
 
 	//Initialise the background texture and sprite
 	sf::Texture floorTexture;

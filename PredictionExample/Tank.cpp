@@ -82,6 +82,9 @@ sf::Vector2f Tank::RunPrediction(float gameTime) {
 	// You need to update:
 	// - the predicted position at the current time, in "predictedX" and "predictedY"
 		
+	//No model prediction
+	predictedX = msg0.x;
+	predictedY = msg0.y;
 	return sf::Vector2f( predictedX, predictedY );
 }
 

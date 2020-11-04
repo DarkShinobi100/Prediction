@@ -1,0 +1,9 @@
+﻿  main.cpp
+  NetworkSimulator.cpp
+  Tank.cpp
+C:\Users\User\Documents\C++\Networking\Prediction\PredictionExample\Tank.cpp(11,64): warning C4244: 'argument': conversion from 'int' to 'float', possible loss of data
+C:\Users\User\Documents\C++\Networking\Prediction\PredictionExample\Tank.cpp(11,35): warning C4244: 'argument': conversion from 'int' to 'float', possible loss of data
+C:\Users\User\Documents\C++\Networking\Prediction\PredictionExample\Tank.cpp(15,78): warning C4244: 'argument': conversion from 'int' to 'float', possible loss of data
+C:\Users\User\Documents\C++\Networking\Prediction\PredictionExample\Tank.cpp(15,49): warning C4244: 'argument': conversion from 'int' to 'float', possible loss of data
+  Generating Code...
+  PredictionExample.vcxproj -> C:\Users\User\Documents\C++\Networking\Prediction\Debug\PredictionExample.exe
